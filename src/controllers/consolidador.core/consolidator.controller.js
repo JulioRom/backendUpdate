@@ -9,37 +9,36 @@ const nodeIds = {
 	slot01Full: "ns=4;i=2"
 };
 
-const nodeId = "ns=4;i=5";
-
-// TODO: 1 .-change the name product to reserve
-// TODO: 2.- when i try to rescan the same product, 
-// TODO: i have a 200 status, this can change asking 
-// TODO: if the lpn is already exist before 
+const greenLight = "ns=4;i=5";
+const blueLight = "ns=4;i=2";
 
 // Reserve filter midddleware
 export const reserveFilter = async (req, res, next) => {
 	const {
 		lpn
 	} = req.params;
+
+	const objJs = await Product.find({
+		lpnAssociates: lpn
+	});
+
+	if (objJs.length === 0 ) 
+	return res.status(403).json({ 
+		message: `the lpn ${lpn} isn't associates to the product collection.
+		message: make sure you have the necessary metadata to process the product` 
+	});
+
 	try {
-		console.log("start reserve filter");
+
 		// find de reserve
-		//TODO: if the lpn isn't in the product collection, catch an error
-		//TODO: solution: verify if i have a product associate, if not, send a message
-		const objJs = await Product.find({
-			lpnAssociates: lpn
-		});
+	
 		req.product = objJs
 		//extract data of the objectjs
-		/* var reserve = objJs[0]["reserve"]; //strig
-		var lpnAss = objJs[0]["lpnAssociates"]; // array with the lpns */
 
         var reserve = objJs[0].reserve; //strig
 		var lpns = objJs[0].lpnAssociates; //strings array
 
-        //console.log(`reserve: ${reserve}  lpns: ${lpns}`);
-
-		//add the reserve data to slot TODO: filter of the slot, falta terminar el script 
+		//add the reserve data to slot 
 		// filter the reserve in the Slot collection  
 		const existReserve = await Slot.findOne({
 			"reserve": reserve
@@ -55,21 +54,17 @@ export const reserveFilter = async (req, res, next) => {
 					"lpnAssociates": lpns
 				}
 			});
-			/* console.log(sloting.slot); */
 		///////////////////////////////////////////////////////////////////////////////////
 		// assign a fisical slot 
-			await allocator(nodeId);
-
-		// console.log("return allocator: ", slotAssigned);
+			await allocator(nodeIds.slot01);
 		///////////////////////////////////////////////////////////////////////////////////
 			console.log("reserve assigned");
 			next();
-		} else if (existReserve) {
+		} else {
 			console.log("The reserve alredy exist in a Slot" )
 			next();
 		};
 		//////////////////////////////////////////////////////////////////////////////////////
-		console.log("end reserve filter");
 	} catch (error) {
 		console.log(error);
 		res.status(400).json({
@@ -84,7 +79,6 @@ export const addLpns = async (req, res, next) => {
 		lpn
 	} = req.params;
 	try {
-		console.log("start adding lpns");
 		const objJs = req.product
 		//extract data of the objectjs
 		var reserve = objJs[0].reserve; //strig
@@ -114,11 +108,11 @@ export const addLpns = async (req, res, next) => {
 				await newLpn.save();
 
 				console.log(`the lpn ${lpnAss[i]} was added successfully `);
-				console.log(lpnAss[i]);
+/* 				console.log(lpnAss[i]);
 				console.log(lpn);
 				console.log(typeof(lpnAss[i]));
 				console.log(typeof(lpn));
-				console.log(lpnAss[i] === lpn);
+				console.log(lpnAss[i] === lpn); */
 
 			} if (lpnAss[i] === lpn){
 
@@ -129,6 +123,9 @@ export const addLpns = async (req, res, next) => {
 				const stateLpn = lpnObj.state;
 				
 				if ( stateLpn == true ) {
+
+					//turn on the light of the slot
+					await allocator(nodeIds.slot01);
 
 					console.log(`the lpn ${lpnAss[i]} has already been processed `);
 				
@@ -143,7 +140,9 @@ export const addLpns = async (req, res, next) => {
 							"state": true
 						}
 					});
-	
+					// turn on the light of the previously associated slot
+					await allocator(nodeIds.slot01);
+
 					console.log(`the lpn ${lpn} was marked like processed `);
 
 				}
@@ -153,7 +152,6 @@ export const addLpns = async (req, res, next) => {
 			}
 		};
 		next();
-		console.log("end adding lpns");
 		} catch (error) {
 		console.log(error);
 		res.status(400).json({
@@ -182,6 +180,7 @@ export const checkCompleteOrders = async (req, res, next) => {
 		//console.log(lpns);
 		
 		for (var i = 0; i <= lpns.length-1; i++) {
+
 		// if exist the lpn, verify if the lpn proccess is in the array if so, change your status
 			var lpnState = lpns[i].state;
 			if (lpnState == true) {
@@ -192,19 +191,17 @@ export const checkCompleteOrders = async (req, res, next) => {
 					//console.log("count: " + count);
 					//console.log("lenght: " + lpns.length);
 					//console.log(count == lpns.length);
+
+					// assign a fisical slot 
+					await allocator(nodeIds.slot01Full);
 					console.log("the order its complete");
 					
 				}
 			} else {
 				break;
 			}
-			
-
 		};
-
-
 		next();
-
 	} catch (error) {
 		console.log(error);
 		res.status(400).json({

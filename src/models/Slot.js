@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-// TODO: change name "product" to reserve 
+
 const slotSchema = new Schema(
 {
 	slot: {

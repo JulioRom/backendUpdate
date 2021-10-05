@@ -1,7 +1,5 @@
 import Product from "../models/Product";
 
-// TODO: change the name product to reserve
-
 // Create the reserve object with lpn associates
 export const createProduct = async (req, res) => {
   const {
