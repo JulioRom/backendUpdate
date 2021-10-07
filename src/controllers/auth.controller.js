@@ -68,8 +68,9 @@ export const signIn = async (req, res) => {
 
     if (!userFound)
       return res.status(400).json({
-        message: "User Not Found",
-      });
+        error: {
+        message: "USER_NOT_FOUND",
+      }});
 
     const matchPassword = await User.comparePassword(
       req.body.password,
@@ -78,22 +79,26 @@ export const signIn = async (req, res) => {
 
     if (!matchPassword)
       return res.status(401).json({
-        token: null,
-        message: "Invalid Password",
-      });
+        error: {
+        message: "INVALID_PASSWORD"
+      }});
 
+    const expiresIn = 86400;  // 24 hours
     const token = jwt.sign(
       {
         id: userFound._id,
       },
       config.SECRET,
       {
-        expiresIn: 86400, // 24 hours
+        expiresIn 
       }
     );
+    const username = userFound.username;
 
     res.json({
       token,
+      username,
+      expiresIn
     });
   } catch (error) {
     console.log(error);
