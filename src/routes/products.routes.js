@@ -10,7 +10,7 @@ router.get("/:productId", productsCtrl.getProductById);
 
 router.post(
   "/",
-  [authJwt.verifyToken, authJwt.isAdmin, nonDuplicate.checkDuplicateReserve, nonDuplicate.checkLpnExist],
+  [authJwt.verifyToken, authJwt.isAdmin, nonDuplicate.checkDuplicateReserve, nonDuplicate.checkLpn],
   productsCtrl.createProduct
 );
 

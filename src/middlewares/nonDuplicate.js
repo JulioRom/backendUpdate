@@ -1,28 +1,37 @@
 import Product from "../models/Product";
 
-//reserve check 
+//reserve check
 const checkDuplicateReserve = async (req, res, next) => {
   try {
     const reserve = await Product.findOne({ reserve: req.body.reserve });
     if (reserve)
-      return res.status(400).json({ error: { message: "RESERVE_ALREADY_EXIST" }});
+      return res
+        .status(400)
+        .json({ error: { message: "RESERVE_ALREADY_EXIST" } });
     next();
   } catch (error) {
-    res.status(500).json({ error: { message: error }});
+    res.status(500).json({ error: { message: error } });
   }
 };
 
-const checkLpnExist = async (req, res, next) => {
+const checkLpn = async (req, res, next) => {
   try {
-    if (!req.body.lpnAssociates)
-      return res.status(400).json({ error: { message: "Need at least one LPN" }});
-    if (req.body.lpnAssociates[0] == String)
-      return res.status(400).json({ error: { message: "error type of data" + typeof(req.body.lpnAssociates[0]) }});
+    if (!req.body.lpnAssociates.length)
+      return res.status(400).json({ error: { message: "CANNOT_BE_EMPTY" } });
+
+    for (let i = 0; i < req.body.lpnAssociates.length; i++) {
+      let isString = typeof(req.body.lpnAssociates[i]) === "string"
+      if (!isString)
+        return res.status(400).json({ error: { message: "MUST_BE_A_STRING" } });
+    }
+
+    // if (req.body.lpnAssociates[0] == String)
+    //   return res.status(400).json({ error: { message: "error type of data" + typeof(req.body.lpnAssociates[0]) }});
+
     next();
-  } catch (error) {
-    res.status(500).json({ error: { message: error }});
+  } catch (e) {
+    res.status(500).json({ error: { message: `${e}` } });
   }
 };
 
-
-export { checkDuplicateReserve, checkLpnExist };
+export { checkDuplicateReserve, checkLpn };
