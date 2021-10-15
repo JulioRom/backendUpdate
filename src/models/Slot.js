@@ -11,6 +11,9 @@ const slotSchema = new Schema(
 	lpnAssociates:{
 		type : Array,
 		state: Boolean
+	},
+	nodes:{
+		type: Array
 	}
 },
 {

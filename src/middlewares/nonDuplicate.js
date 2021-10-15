@@ -14,20 +14,16 @@ const checkDuplicateReserve = async (req, res, next) => {
   }
 };
 
+//check if the lpns atribute is empty and if not, check if is a string  
 const checkLpn = async (req, res, next) => {
   try {
     if (!req.body.lpnAssociates.length)
       return res.status(400).json({ error: { message: "CANNOT_BE_EMPTY" } });
-
     for (let i = 0; i < req.body.lpnAssociates.length; i++) {
-      let isString = typeof(req.body.lpnAssociates[i]) === "string"
+      let isString = typeof req.body.lpnAssociates[i] === "string";
       if (!isString)
         return res.status(400).json({ error: { message: "MUST_BE_A_STRING" } });
     }
-
-    // if (req.body.lpnAssociates[0] == String)
-    //   return res.status(400).json({ error: { message: "error type of data" + typeof(req.body.lpnAssociates[0]) }});
-
     next();
   } catch (e) {
     res.status(500).json({ error: { message: `${e}` } });

@@ -4,6 +4,38 @@ import User from "../models/User";
 import bcrypt from "bcryptjs";
 import Slot from "../models/Slot";
 
+const nodeID = [
+  {
+    0: {
+      assigned: "ns=4;i=5",
+      complete: "ns=4;i=2",
+    },
+  },
+  {
+    1: {
+      assigned: "ns=4;i=6",
+      complete: "ns=4;i=7",
+    },
+  },
+  {
+    2: {
+      assigned: "ns=4;i=8",
+      complete: "ns=4;i=9",
+    },
+  },
+  {
+    3: {
+      assigned: "ns=4;i=10",
+      complete: "ns=4;i=11",
+    },
+  },
+  // {
+  //   4: {
+  //     assigned: "ns=4;i=10",
+  //     complete: "ns=4;i=11",
+  //   },
+  // },
+];
 
 export const createRoles = async () => {
   try {
@@ -52,12 +84,19 @@ export const createTenSlots = async (req, res) => {
     // check for existing slots
     if (count > 0) return;
 
-    for (let index = 0; index < 10; index++) 
+    for (let index = 0; index < 4; index++) 
     {
+      const array = nodeID[index]
+      const nodos = array[index]
+      const value = [nodos.assigned, nodos.complete]
+
+      console.log(nodos);
+
       const newSlot = new Slot({
         slot: index,
         reserve:"",
-        lpnAssociates:[]
+        lpnAssociates:[],
+        nodes: value
       });
       const slotSaved = await newSlot.save();
       
