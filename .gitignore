@@ -6,3 +6,11 @@ build
 
 # environment variables
 .env
+
+#workspace vs code
+conso.code-workspace
+.vscode
+vsc-extensions.txt
+
+#babel
+.babelrc

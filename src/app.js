@@ -1,4 +1,5 @@
 import express from "express";
+import compression from "compression";
 import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
@@ -10,7 +11,7 @@ import usersRoutes from "./routes/user.routes";
 import authRoutes from "./routes/auth.routes";
 import consRoutes from "./routes/consolidator.routes";
 
-import { createRoles, createAdmin, createTenSlots} from "./libs/initialSetup";
+import { createRoles, createAdmin, createTenSlots } from "./libs/initialSetup";
 
 const app = express();
 createRoles();
@@ -26,6 +27,7 @@ app.set("json spaces", 4);
 const corsOptions = {
   // origin: "http://localhost:3000",
 };
+app.use(compression());
 app.use(cors(corsOptions));
 app.use(helmet());
 app.use(morgan("dev"));
