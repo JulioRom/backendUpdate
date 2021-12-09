@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon src/index.js --exec babel-node",
     "build": "babel src --out-dir build",
-    "start": "node build/index.js",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist",
     "test": "jest"
   },
   "repository": {

@@ -9,7 +9,7 @@ import {
 const greenLight = "ns=4;i=5";
 const blueLight = { nodeId: "ns=4;i=2", attributeId: AttributeIds.Value };
 const nodeId = "ns=4;i=2";
-const endpointUrl = "opc.tcp://10.115.43.26:4840"; //staging server opc
+const endpointUrl = "opc.tcp://192.168.0.1:4840";
 
 const options = {
   requestedPublishingInterval: 2,
