@@ -10,6 +10,7 @@ import productRoutes from "./routes/products.routes";
 import usersRoutes from "./routes/user.routes";
 import authRoutes from "./routes/auth.routes";
 import consRoutes from "./routes/consolidator.routes";
+import reserves from "./routes/reserveInSlot.routes"
 
 import { createRoles, createAdmin, createTenSlots } from "./libs/initialSetup";
 
@@ -50,5 +51,6 @@ app.use("/api/products", productRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/inProgress", consRoutes);
+app.use("/api/reserveInSlot", reserves);
 
 export default app;

@@ -47,10 +47,10 @@ const nodeID = [
   },
   {
     5: {
-      assigned: "ns=1;s=S7-TEST.Flags.S5_ASSIGNED_BL",
-      complete: "ns=1;s=S7-TEST.Flags.S5_COMPLETE_BL",
-      takeout: "ns=1;s=S7-TEST.Flags.S5_TAKEOUT",
-      remove: "ns=1;s=S7-TEST.Flags.S5_REMOVE",
+      assigned: "ns=1;s=S7-TEST.Flags.S6_ASSIGNED_BL",
+      complete: "ns=1;s=S7-TEST.Flags.S6_COMPLETE_BL",
+      takeout: "ns=1;s=S7-TEST.Flags.S6_TAKEOUT",
+      remove: "ns=1;s=S7-TEST.Flags.S6_REMOVE",
     },
   },
 ];
