@@ -1,8 +1,5 @@
 import { Router } from "express";
 const router = Router();
-
-import * as authCtrl from "../controllers/auth.controller";
-import { verifySignup } from "../middlewares";
 import * as consCtrl from "../controllers/consolidador.core/consolidator.controller"
 
 router.use((req, res, next) => {
@@ -18,5 +15,7 @@ router.all(
   [consCtrl.reserveFilter, consCtrl.addLpns, consCtrl.checkCompleteOrders],
   consCtrl.final
 );
+
+
 
 export default router;
