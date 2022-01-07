@@ -41,6 +41,9 @@
     "mongoose": "^5.13.1",
     "morgan": "^1.10.0",
     "node-opcua": "^2.50.0",
-    "node-opcua-client": "^2.50.0"
+    "node-opcua-client": "^2.50.0",
+    "openapi-types": "^10.0.0",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.3.0"
   }
 }

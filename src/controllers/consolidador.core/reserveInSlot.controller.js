@@ -61,7 +61,7 @@ export const slotsTakeOut = async (req, res, next) => {
     } else {
       let slotObj = await Slot.find({ reserve: reserves[0] });
       //console.log(!slotObj);
-      if (slotObj.length === 0) {x
+      if (slotObj.length === 0) {
         return res.status(400).json({
           error: {
             message: "RESERVE_NOT_FOUND",

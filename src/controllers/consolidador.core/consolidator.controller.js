@@ -4,14 +4,6 @@ import Product from "../../models/Product";
 import Slot from "../../models/Slot";
 import { reader, allocator } from "../opcua.controller/opcua.controller.mjs";
 
-const nodeIds = {
-  slot01: "ns=4;i=5",
-  slot01Full: "ns=4;i=2",
-};
-
-const greenLight = "ns=4;i=5";
-const blueLight = "ns=4;i=2";
-
 // Reserve filter midddleware
 export const reserveFilter = async (req, res, next) => {
   const { lpn } = req.params;
@@ -23,7 +15,7 @@ export const reserveFilter = async (req, res, next) => {
   if (objJs.length === 0)
     return res.status(404).json({
       error: {
-        message: `the lpn ${lpn} isn't associates to the product collection. Make sure you have the necessary metadata to process the product`,
+        message: `LPN_${lpn}_NOT_FOUND`,
       },
     });
 

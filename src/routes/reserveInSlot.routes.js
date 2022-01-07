@@ -3,8 +3,9 @@ const router = Router();
 
 import * as reserveInSlot from "../controllers/consolidador.core/reserveInSlot.controller";
 
-router.get("/", reserveInSlot.reserves);
-
-router.put("/",reserveInSlot.slotsTakeOut);
+router
+.route("/")
+.get(reserveInSlot.reserves)
+.put(reserveInSlot.slotsTakeOut);
 
 export default router;
