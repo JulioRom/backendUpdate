@@ -9,7 +9,7 @@ import { authJwt, nonDuplicate } from "../middlewares";
  *  @swagger
  *  /api/products:
  *    get:
- *      summary: Retorna todos los Productos 
+ *      summary: Retorna todos los Productos/Reserva 
  *      tags: [Product]
  *      responses:
  *        200: 
@@ -26,7 +26,7 @@ router.get("/", productsCtrl.getProducts);
  *  @swagger
  *  /api/products/{id}:
  *    get:
- *      summary: Retorna un usuario 
+ *      summary: Retorna un Producto/Reserva 
  *      tags: [Product]
  *      parameters:
  *        - in: path
@@ -83,7 +83,7 @@ router.get("/:productId", productsCtrl.getProductById);
  *  @swagger
  *  /api/products:
  *    post:
- *      summary: Crea un nuevo producto
+ *      summary: Crea un nuevo Producto/Reserva 
  *      tags: [Product]
  *      requestBody:
  *        required: true
@@ -107,7 +107,7 @@ router.post(
  *  @swagger
  *  /api/products/{id}:
  *    put:
- *      summary: Actualiza los datos de un producto 
+ *      summary: Actualiza los datos de un Producto/Reserva 
  *      tags: [Product]
  *      parameters:
  *        - in: path
@@ -139,6 +139,30 @@ router.put(
   productsCtrl.updateProductById
 );
 
+/**
+ *  @swagger
+ *  /api/products/{id}:
+ *    delete:
+ *      summary: Elimina un Producto/Reserva 
+ *      tags: [Product]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema: 
+ *            type: string
+ *          required: true
+ *          description: La id del producto
+ *      responses:
+ *        200: 
+ *          description: Producto solicitado eliminado
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                $ref: '#/components/schemas/Product'
+ *        404:
+ *          description: Producto no encontrado
+ */
 router.delete(
   "/:productId",
   productsCtrl.deleteProductById

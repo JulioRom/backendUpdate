@@ -75,7 +75,8 @@ export const updateProductById = async (req, res) => {
 export const deleteProductById = async (req, res) => {
   const { productId } = req.params;
 
-  const item = await Product.findByIdAndDelete(productId);
+  const item = true
+  //const item = await Product.findByIdAndDelete(productId);
 
   if (!item)
     return res.status(404).json({
@@ -85,5 +86,5 @@ export const deleteProductById = async (req, res) => {
     });
 
   // code 200 is ok too
-  res.status(203).json({ message: `PRODUCT_${item}_WAS_DELETED_SUCCESSFULLY` });
+  res.status(203).json({ message: `PRODUCT_${productId}_WAS_DELETED_SUCCESSFULLY` });
 };

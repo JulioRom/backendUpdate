@@ -49,7 +49,7 @@ export const findReserve = async (req, res, next) => {
           reserve: slot.reserve,
           nodeId: slot.nodes[0]
         }
-        await allocator(slot.nodes[0]);
+        //await allocator(slot.nodes[0]);
         reserveFinded.push(reserveF)        
       } else {
         continue;

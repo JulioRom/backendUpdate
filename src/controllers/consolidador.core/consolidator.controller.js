@@ -55,7 +55,7 @@ export const reserveFilter = async (req, res, next) => {
           },
         });
       // assign a fisical slot
-      await allocator(sloting.nodes[0]);
+      //await allocator(sloting.nodes[0]);
       ///////////////////////////////////////////////////////////////////////////////////
       console.log("reserve assigned");
       next();
@@ -119,7 +119,7 @@ export const addLpns = async (req, res, next) => {
 
         if (stateLpn == true) {
           //turn on the light of the slot
-          await allocator(idSlotInReserve.nodes[0]);
+          //await allocator(idSlotInReserve.nodes[0]);
 
           console.log(`the lpn ${lpnAss[i]} has already been processed `);
 
@@ -136,7 +136,7 @@ export const addLpns = async (req, res, next) => {
             }
           );
           // turn on the light of the previously associated slot
-          await allocator(idSlotInReserve.nodes[0]);
+          //await allocator(idSlotInReserve.nodes[0]);
 
           console.log(`the lpn ${lpn} was marked like processed `);
         }
@@ -184,7 +184,7 @@ export const checkCompleteOrders = async (req, res, next) => {
 
           let doc = await Product.findOneAndUpdate(filter, update);
           // assign a fisical slot
-          await allocator(slotData.nodes[1]);
+          //await allocator(slotData.nodes[1]);
           console.log("the order its complete");
         }
       } else {
