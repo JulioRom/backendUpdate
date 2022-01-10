@@ -45,12 +45,11 @@ router.use((req, res, next) => {
  *        404:
  *          description: "LPN_NOT_FOUND;SYSTEM_WITHOUT_EMPTY_SLOTS"
  */
-router.all(
+router.get(
   "/:lpn",
   [consCtrl.reserveFilter, consCtrl.addLpns, consCtrl.checkCompleteOrders],
   consCtrl.final
 );
-
 
 
 export default router;

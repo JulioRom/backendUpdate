@@ -47,14 +47,14 @@ export const slotsTakeOut = async (req, res, next) => {
         } else {
           resOn.push(oneReserve);
           console.log("node take out activated: " + slotObj[0].nodes[2]);
-          await allocator(slotObj[0].nodes[2]);
+          //await allocator(slotObj[0].nodes[2]);
         }
       }
       return res
         .status(200)
         .json({reservesInSlots:{
-          takeOutON: `${resOn}`,
-          reserveNotFound: `${notFound}`,
+          takeOutON: [`${resOn}`],
+          reserveNotFound: [`${notFound}`],
         }}
           //`reserves in slots: take out ON: ${resOn} \n reserves not foudn: ${notFound}`
         );
@@ -70,7 +70,7 @@ export const slotsTakeOut = async (req, res, next) => {
       }
       //console.log("obj slot :" + slotObj);
       //console.log("nodes :" + slotObj[0].nodes[2]);
-      await allocator(slotObj[0].nodes[2]);
+      //await allocator(slotObj[0].nodes[2]);
       return res.status(200).json({reservesInSlots:{
         takeOutON: `${slotObj[0].reserve}`,
         reserveNotFound: ""}});
